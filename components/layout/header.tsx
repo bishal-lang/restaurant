@@ -30,8 +30,8 @@ export default function Header() {
               </Text>
             </Link>
 
-            <Link href="/story" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Text fw={pathname === '/story' ? 500 : 400} c={pathname === '/story' ? undefined : 'dimmed'}>
+            <Link href="/ourStory" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Text fw={pathname === '/ourStory' ? 500 : 400} c={pathname === '/ourStory' ? undefined : 'dimmed'}>
                 Our Story
               </Text>
             </Link>

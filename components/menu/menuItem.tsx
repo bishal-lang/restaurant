@@ -47,7 +47,7 @@ export default function MenuItem({ item }: { item: MenuItemType }) {
           </Text>
 
           <Text fw={500} size="sm">
-            Rs. {item.price}
+            $ {item.price}
           </Text>
         </Group>
 
