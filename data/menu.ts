@@ -274,7 +274,7 @@ export const menu = [
       name: "Garlic Aioli",
       price: 1.5,
       description: "Creamy garlic sauce.",
-      image: "/images/menu/sauces-garlic-aioli.png"
+      image: "/images/menu/sauces-garlic-aiolo.png"
     },
     {
       id: 38,
