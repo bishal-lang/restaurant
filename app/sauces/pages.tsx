@@ -3,23 +3,15 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
 import Hero from '@/components/layout/hero';
-import { getBaseUrl } from '@/lib/getBaseURL';
+import { menu } from '@/data/menu';
 
-async function getMenu() {
-  const baseUrl = getBaseUrl();
+export default function Page() {
+  const saucesCategory = menu.find(
+    (category) => category.category.toLowerCase() === 'sauces'
+  );
 
-  const res = await fetch(`${baseUrl}/api/menu`, {
-    cache: 'no-store',
-  });
-
-  if (!res.ok) return [];
-
-  return res.json();
-}
-
-export default async function Page() {
-  const data = await getMenu();
-
+  // Ensure safe fallback
+  const data = saucesCategory ? [saucesCategory] : [];
   return (
     <>
       <Header />
@@ -27,7 +19,7 @@ export default async function Page() {
 
       <Container size="lg" py="xl">
         <Menu data={data} />
-      </Container>
+      </Container>  
 
       <Footer />
     </>

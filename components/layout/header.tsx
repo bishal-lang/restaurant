@@ -30,6 +30,24 @@ export default function Header() {
               </Text>
             </Link>
 
+            <Link href="/sides" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Text fw={pathname === '/sides' ? 500 : 400} c={pathname === '/sides' ? undefined : 'dimmed'}>
+                Sides
+              </Text>
+            </Link>
+
+            <Link href="/sauces" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Text fw={pathname === '/sauces' ? 500 : 400} c={pathname === '/sauces' ? undefined : 'dimmed'}>
+                Sauces
+              </Text>
+            </Link>
+
+            <Link href="/dessert" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Text fw={pathname === '/dessert' ? 500 : 400} c={pathname === '/dessert' ? undefined : 'dimmed'}>
+                Desserts
+              </Text>
+            </Link>
+
             <Link href="/ourStory" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Text fw={pathname === '/ourStory' ? 500 : 400} c={pathname === '/ourStory' ? undefined : 'dimmed'}>
                 Our Story

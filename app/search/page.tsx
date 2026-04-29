@@ -3,19 +3,28 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
 import NoResults from '@/components/ui/noResults';
-import { menu } from '@/data/menu';
+import { getBaseUrl } from '@/lib/getBaseURL';
+
+async function getSearchResults(query: string) {
+  const baseUrl = getBaseUrl();
+
+  const res = await fetch(
+    `${baseUrl}/api/search?q=${encodeURIComponent(query)}`,
+    { cache: 'no-store' }
+  );
+
+  if (!res.ok) return [];
+
+  return res.json();
+}
 
 export default async function SearchPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
-  // ✅ THIS IS THE FIX
   const params = await searchParams;
-
-  const query = params.q?.trim().toLowerCase() || '';
-
-  console.log('QUERY:', query); // check Vercel logs
+  const query = params.q?.trim() || '';
 
   if (!query) {
     return (
@@ -30,17 +39,7 @@ export default async function SearchPage({
     );
   }
 
-  const filtered = menu
-    .map((category) => ({
-      ...category,
-      items: category.items.filter((item) => {
-        const text =
-          `${item.name} ${item.description}`.toLowerCase();
-
-        return text.includes(query);
-      }),
-    }))
-    .filter((category) => category.items.length > 0);
+  const data = await getSearchResults(query);
 
   return (
     <>
@@ -53,8 +52,8 @@ export default async function SearchPage({
 
         <Divider mb="lg" />
 
-        {filtered.length > 0 ? (
-          <Menu data={filtered} />
+        {data.length > 0 ? (
+          <Menu data={data} />
         ) : (
           <NoResults query={query} />
         )}

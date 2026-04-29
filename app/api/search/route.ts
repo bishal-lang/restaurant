@@ -1,26 +1,20 @@
 import { menu } from '@/data/menu';
-import { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const queryParam = url.searchParams.get('q');
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
 
-  const query = queryParam?.trim().toLowerCase() || '';
+  const query = searchParams.get('q')?.toLowerCase() || '';
 
-  console.log('QUERY:', query);
-
-  if (!query) {
-    return Response.json(menu);
-  }
+  if (!query) return Response.json([]);
 
   const filtered = menu
     .map((category) => ({
       ...category,
       items: category.items.filter((item) => {
-        const name = item.name.toLowerCase();
-        const desc = item.description.toLowerCase();
+        const text =
+          `${item.name} ${item.description}`.toLowerCase();
 
-        return name.includes(query) || desc.includes(query);
+        return text.includes(query);
       }),
     }))
     .filter((category) => category.items.length > 0);
