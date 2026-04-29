@@ -25,6 +25,7 @@ export default function SearchPage({
     );
   }
 
+  // 🔍 Filter locally (THIS replaces your API)
   const filtered = menu
     .map((category) => ({
       ...category,

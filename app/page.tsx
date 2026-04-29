@@ -6,8 +6,12 @@ import Hero from '@/components/layout/hero';
 import { menu } from '@/data/menu';
 
 export default function Page() {
-  const data = menu;
+  const entreeCategory = menu.find(
+    (category) => category.category.toLowerCase() === 'entrees'
+  );
 
+  // Ensure safe fallback
+  const data = entreeCategory ? [entreeCategory] : [];
   return (
     <>
       <Header />

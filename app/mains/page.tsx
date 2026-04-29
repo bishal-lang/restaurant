@@ -18,9 +18,6 @@ export default function MainsPage() {
       <Header />
 
       <Container size="lg" py="xl">
-        <Title order={2} mb="lg">
-          Mains
-        </Title>
 
         {data.length > 0 ? (
           <Menu data={data} />
