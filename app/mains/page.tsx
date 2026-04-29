@@ -29,6 +29,7 @@ export default async function MainsPage() {
       <Header />
       <Hero />
       <Container size="lg" py="xl">
+
         <Menu data={mains} />
       </Container>
 

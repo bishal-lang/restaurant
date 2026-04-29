@@ -6,7 +6,7 @@ import { CategoryType } from '@/types/menu';
 import Hero from '@/components/layout/hero';
 
 async function getMenu(): Promise<CategoryType[]> {
-  const res = await fetch('http://localhost:3000/api/menu', {
+  const res = await fetch('/api/menu', {
     cache: 'no-store', // or remove if static
   });
 
