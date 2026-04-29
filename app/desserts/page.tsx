@@ -6,12 +6,12 @@ import Hero from '@/components/layout/hero';
 import { menu } from '@/data/menu';
 
 export default async function Page() {
-  const dessertCategory = menu.find(
+  const dessertsCategory = menu.find(
     (category) => category.category.toLowerCase() === 'desserts'
   );
 
   // Ensure safe fallback
-  const data = dessertCategory ? [dessertCategory] : [];
+  const data = dessertsCategory ? [dessertsCategory] : [];
   return (
     <>
       <Header />
