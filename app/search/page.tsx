@@ -6,7 +6,7 @@ import NoResults from '@/components/ui/noResults';
 import { getBaseUrl } from '@/lib/getBaseURL';
 
 async function getSearchResults(query: string) {
-  const baseUrl = getBaseUrl();
+  const baseUrl = await getBaseUrl();
 
   const res = await fetch(
     `${baseUrl}/api/search?q=${encodeURIComponent(query)}`,

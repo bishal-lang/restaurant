@@ -6,7 +6,7 @@ import Hero from '@/components/layout/hero';
 import { getBaseUrl } from '@/lib/getBaseURL';
 
 async function getMenu() {
-  const baseUrl = getBaseUrl();
+  const baseUrl = await getBaseUrl();
 
   const res = await fetch(`${baseUrl}/api/menu`, {
     cache: 'no-store',
