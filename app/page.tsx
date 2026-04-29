@@ -4,6 +4,7 @@ import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
 import Hero from '@/components/layout/hero';
 import { getBaseUrl } from '@/lib/getBaseURL';
+import { menu } from '@/data/menu';
 
 async function getMenu() {
   const baseUrl = await getBaseUrl();
@@ -18,7 +19,13 @@ async function getMenu() {
 }
 
 export default async function Page() {
-  const data = await getMenu();
+
+  const entreeCategory = menu.find(
+      (category) => category.category.toLowerCase() === 'entrees'
+    );
+  
+    // Ensure safe fallback
+    const data = entreeCategory ? [entreeCategory] : [];
 
   return (
     <>

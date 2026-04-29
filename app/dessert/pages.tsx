@@ -1,26 +1,52 @@
-import { Container } from '@mantine/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Container, Title } from '@mantine/core';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
-import Hero from '@/components/layout/hero';
-import { menu } from '@/data/menu';
+import { getBaseUrl } from '@/lib/getBaseURL';
 
-export default function Page() {
-  const dessertCategory = menu.find(
-    (category) => category.category.toLowerCase() === 'dessert'
+async function getDesserts() {
+  const baseUrl = await getBaseUrl();
+
+  const res = await fetch(`${baseUrl}/api/menu`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) return null;
+
+  const data = await res.json();
+
+  return data.find(
+    (c: any) => c.category.toLowerCase() === 'desserts'
   );
+}
 
-  // Ensure safe fallback
-  const data = dessertCategory ? [dessertCategory] : [];
+export default async function DessertsPage() {
+  const category = await getDesserts();
+
+  if (!category) {
+    return (
+      <>
+        <Header />
+        <Container py="xl">
+          <Title>Desserts</Title>
+          <p>No desserts found</p>
+        </Container>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
-      <Hero />
-
       <Container size="lg" py="xl">
-        <Menu data={data} />
-      </Container>  
+        <Title order={2} mb="lg">
+          Desserts
+        </Title>
 
+        <Menu data={[category]} />
+      </Container>
       <Footer />
     </>
   );
