@@ -314,7 +314,7 @@ export const menu = [
       name: "Nutella Heaven Waffle",
       price: 14.99,
       description: "Waffle drizzled with rich Nutella.",
-      image: "/images/menu/desserts-nutella-heavven-waffle.png"
+      image: "/images/menu/desserts-nutella-heaven-waffle.png"
     },
     {
       id: 43,

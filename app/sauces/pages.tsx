@@ -5,7 +5,7 @@ import Menu from '@/components/menu/menu';
 import Hero from '@/components/layout/hero';
 import { menu } from '@/data/menu';
 
-export default function Page() {
+export default async function Page() {
   const saucesCategory = menu.find(
     (category) => category.category.toLowerCase() === 'sauces'
   );
