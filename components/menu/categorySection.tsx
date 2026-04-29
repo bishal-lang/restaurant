@@ -9,6 +9,8 @@ export default function CategorySection({
 }: {
   category: CategoryType;
 }) {
+  if (!category.items || category.items.length === 0) return null;
+
   return (
     <Stack>
       <Title order={2}>{category.category}</Title>

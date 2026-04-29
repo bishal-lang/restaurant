@@ -2,35 +2,31 @@ import { Container, Title } from '@mantine/core';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
-import { CategoryType } from '@/types/menu';
-import Hero from '@/components/layout/hero';
+import { menu } from '@/data/menu';
 
-async function getMenu(): Promise<CategoryType[]> {
-  const res = await fetch('/api/menu', {
-    cache: 'no-store',
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch menu');
-  }
-
-  return res.json();
-}
-
-export default async function MainsPage() {
-  const data = await getMenu();
-
-  const mains = data.filter((cat) =>
-    cat.category.toLowerCase().includes('main')
+export default function MainsPage() {
+  // Get only the "Mains" category
+  const mainsCategory = menu.find(
+    (category) => category.category.toLowerCase() === 'mains'
   );
+
+  // Ensure safe fallback
+  const data = mainsCategory ? [mainsCategory] : [];
 
   return (
     <>
       <Header />
-      <Hero />
-      <Container size="lg" py="xl">
 
-        <Menu data={mains} />
+      <Container size="lg" py="xl">
+        <Title order={2} mb="lg">
+          Mains
+        </Title>
+
+        {data.length > 0 ? (
+          <Menu data={data} />
+        ) : (
+          <div>No items found</div>
+        )}
       </Container>
 
       <Footer />

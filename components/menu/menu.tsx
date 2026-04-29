@@ -5,6 +5,8 @@ import CategorySection from './categorySection';
 import { CategoryType } from '@/types/menu';
 
 export default function Menu({ data }: { data: CategoryType[] }) {
+  if (!data || data.length === 0) return null;
+
   return (
     <Stack gap="xl">
       {data.map((category) => (

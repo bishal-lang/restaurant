@@ -3,55 +3,40 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
 import NoResults from '@/components/ui/noResults';
-import { CategoryType } from '@/types/menu';
+import { menu } from '@/data/menu';
 
-async function getSearchResults(query: string): Promise<CategoryType[]> {
-  const res = await fetch(
-    `/api/search?q=${encodeURIComponent(query)}`,
-    { cache: 'no-store' }
-  );
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch search results');
-  }
-
-  return res.json();
-}
-
-export default async function SearchPage({
+export default function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>; // 👈 now a Promise
+  searchParams: { q?: string };
 }) {
-  // 🔥 FIX: await searchParams
-  const params = await searchParams;
-  const query = params?.q?.trim() || '';
+  const query = searchParams.q?.trim().toLowerCase() || '';
 
-  // Empty search
   if (!query) {
     return (
       <>
         <Header />
-
         <Container size="lg" py="xl">
-          <Title order={2} mb="lg">
-            Search
-          </Title>
-
+          <Title order={2}>Search</Title>
           <NoResults />
         </Container>
-
         <Footer />
       </>
     );
   }
 
-  const data = await getSearchResults(query);
+  const filtered = menu
+    .map((category) => ({
+      ...category,
+      items: category.items.filter(
+        (item) =>
+          item.name.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query)
+      ),
+    }))
+    .filter((category) => category.items.length > 0);
 
-  // Safe result check
-  const hasResults = data.some(
-    (cat) => Array.isArray(cat.items) && cat.items.length > 0
-  );
+  const hasResults = filtered.length > 0;
 
   return (
     <>
@@ -59,13 +44,13 @@ export default async function SearchPage({
 
       <Container size="lg" py="xl">
         <Title order={2} mb="xs">
-          {`Results for "${query}"`}
+          Results for &quot;{query}&quot;
         </Title>
 
         <Divider mb="lg" />
 
         {hasResults ? (
-          <Menu data={data} />
+          <Menu data={filtered} />
         ) : (
           <NoResults query={query} />
         )}
