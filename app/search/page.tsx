@@ -7,7 +7,7 @@ import { CategoryType } from '@/types/menu';
 
 async function getSearchResults(query: string): Promise<CategoryType[]> {
   const res = await fetch(
-    `http://localhost:3000/api/search?q=${encodeURIComponent(query)}`,
+    `/api/search?q=${encodeURIComponent(query)}`,
     { cache: 'no-store' }
   );
 
