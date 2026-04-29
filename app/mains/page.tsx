@@ -1,8 +1,9 @@
-import { Container, Title } from '@mantine/core';
+import { Container } from '@mantine/core';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import Menu from '@/components/menu/menu';
 import { menu } from '@/data/menu';
+import Hero from '@/components/layout/hero';
 
 export default function MainsPage() {
   // Get only the "Mains" category
@@ -16,7 +17,7 @@ export default function MainsPage() {
   return (
     <>
       <Header />
-
+      <Hero />
       <Container size="lg" py="xl">
 
         {data.length > 0 ? (

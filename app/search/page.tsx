@@ -5,12 +5,17 @@ import Menu from '@/components/menu/menu';
 import NoResults from '@/components/ui/noResults';
 import { menu } from '@/data/menu';
 
-export default function SearchPage({
+export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }) {
-  const query = searchParams.q?.trim().toLowerCase() || '';
+  // ✅ THIS IS THE FIX
+  const params = await searchParams;
+
+  const query = params.q?.trim().toLowerCase() || '';
+
+  console.log('QUERY:', query); // check Vercel logs
 
   if (!query) {
     return (
@@ -25,19 +30,17 @@ export default function SearchPage({
     );
   }
 
-  // 🔍 Filter locally (THIS replaces your API)
   const filtered = menu
     .map((category) => ({
       ...category,
-      items: category.items.filter(
-        (item) =>
-          item.name.toLowerCase().includes(query) ||
-          item.description.toLowerCase().includes(query)
-      ),
+      items: category.items.filter((item) => {
+        const text =
+          `${item.name} ${item.description}`.toLowerCase();
+
+        return text.includes(query);
+      }),
     }))
     .filter((category) => category.items.length > 0);
-
-  const hasResults = filtered.length > 0;
 
   return (
     <>
@@ -50,7 +53,7 @@ export default function SearchPage({
 
         <Divider mb="lg" />
 
-        {hasResults ? (
+        {filtered.length > 0 ? (
           <Menu data={filtered} />
         ) : (
           <NoResults query={query} />

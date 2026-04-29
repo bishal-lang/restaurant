@@ -19,7 +19,7 @@ export default function Page() {
 
       <Container size="lg" py="xl">
         <Menu data={data} />
-      </Container>
+      </Container>  
 
       <Footer />
     </>
